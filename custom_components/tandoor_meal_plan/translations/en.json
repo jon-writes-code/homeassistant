@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Tandoor",
+        "data": {
+          "url": "Tandoor URL (e.g. http://tandoor.local:8002)",
+          "api_token": "API token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach that URL.",
+      "invalid_auth": "That API token was rejected."
+    },
+    "abort": {
+      "already_configured": "This Tandoor server is already configured."
+    }
+  }
+}

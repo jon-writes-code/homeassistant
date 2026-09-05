@@ -144,8 +144,7 @@ views:
           .me{color:#555;font-size:14px;text-align:center}
           ha-card,#content{background:transparent !important;box-shadow:none !important;border:none !important;padding:0 !important;margin:0 !important}
         </style>
-        {% set MEAL_PLANNER_URL = 'http://your-meal-planner-host:8002' %}
-        {% set meals = state_attr('sensor.meal_plan', 'meals') or [] %}
+        {% set meals = state_attr('sensor.tandoor_meal_plan', 'meals') or [] %}
         <div class="mr">
         {% set dow = now().weekday() %}
         {% set days_since_sunday = (dow + 1) % 7 %}
@@ -159,13 +158,38 @@ views:
           {% else %}
             {% for m in day_meals %}
               {% if m.recipe %}
-                {% set name = m.recipe.name %}
-                {% set url = MEAL_PLANNER_URL + '/recipe/' + (m.recipe.id | string) %}
+                {% set r = m.recipe %}
+                {% set name = r.name %}
+                {% set meta_parts = [] %}
+                {% if r.servings %}{% set meta_parts = meta_parts + [(r.servings ~ ' servings')] %}{% endif %}
+                {% if r.working_time %}{% set meta_parts = meta_parts + [(r.working_time ~ ' min prep')] %}{% endif %}
+                {% if r.waiting_time %}{% set meta_parts = meta_parts + [(r.waiting_time ~ ' min cook')] %}{% endif %}
+                {% set ns = namespace(md=[]) %}
+                {% if r.image %}{% set ns.md = ns.md + ['![' ~ name ~ '](' ~ r.image ~ ')'] %}{% endif %}
+                {% if meta_parts %}{% set ns.md = ns.md + ['_' ~ (meta_parts | join(' · ')) ~ '_'] %}{% endif %}
+                {% for step in r.steps or [] %}
+                  {% if step.name %}{% set ns.md = ns.md + ['**' ~ step.name ~ '**'] %}{% endif %}
+                  {% set ns2 = namespace(ing=[]) %}
+                  {% for ing in step.ingredients or [] %}
+                    {% set amt = ing.amount %}
+                    {% set amt_str = (amt | int | string) if (amt and amt == (amt | int)) else (amt | string) %}
+                    {% set unit = ing.unit or '' %}
+                    {% set food = ing.food or '' %}
+                    {% if amt and amt != 1 %}
+                      {% set ns2.ing = ns2.ing + ['- ' ~ amt_str ~ ' ' ~ unit ~ ' ' ~ food] %}
+                    {% else %}
+                      {% set ns2.ing = ns2.ing + ['- ' ~ food] %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if ns2.ing %}{% set ns.md = ns.md + [ns2.ing | join('\n')] %}{% endif %}
+                  {% if step.instruction %}{% set ns.md = ns.md + [step.instruction] %}{% endif %}
+                {% endfor %}
+                {% set popup = {"title": name, "content": {"type": "markdown", "content": ns.md | join('\n\n')}, "size": "large", "style": "--popup-min-width: 70vw;\n--popup-min-height: 70vh;\n"} %}
               {% else %}
                 {% set name = m.title %}
-                {% set url = MEAL_PLANNER_URL %}
+                {% set popup = {"title": name, "content": {"type": "markdown", "content": "No recipe linked to this meal."}, "size": "small"} %}
               {% endif %}
-              <div class="mi{% if local_d == now().strftime('%Y-%m-%d') %} mt{% endif %}" onclick="window.open('{{ url }}','_blank')">{{ name }}</div>
+              <div class="mi{% if local_d == now().strftime('%Y-%m-%d') %} mt{% endif %}" data-popup='{{ popup | to_json | e }}' onclick="window.browser_mod.showPopup(JSON.parse(this.dataset.popup))">{{ name }}</div>
             {% endfor %}
           {% endif %}
           </div>

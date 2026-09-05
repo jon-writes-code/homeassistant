@@ -1,0 +1,11 @@
+search_recipes:
+  name: Search recipes
+  description: Search your Tandoor recipe collection by name.
+  fields:
+    query:
+      name: Query
+      description: Text to fuzzy-match against recipe names.
+      required: true
+      example: "chicken"
+      selector:
+        text:
