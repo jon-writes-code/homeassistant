@@ -39,6 +39,7 @@ and `todo.tandoor_shopping_list` match the entity IDs the
 `tandoor_meal_plan` integration below creates by default.
 
 ### `dashboards/family_calendar.yaml`
+<img width="1546" height="868" alt="image" src="https://github.com/user-attachments/assets/fb40037c-2d29-4646-9324-834060c39323" />
 
 Wall-mounted kiosk dashboard: weather header, a meal-plan strip pulling from
 a Tandoor instance, a multi-calendar week view, and a small button bar
