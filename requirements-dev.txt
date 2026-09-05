@@ -1,4 +1,0 @@
-homeassistant
-pytest-homeassistant-custom-component
-pre-commit
-ruff

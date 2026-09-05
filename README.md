@@ -78,15 +78,3 @@ Install by copying `integrations/tandoor_meal_plan/` into your HA config's
 `custom_components/` directory (that exact name is required — Home
 Assistant's component loader looks for it specifically), restart HA, then
 add the integration via the UI as above.
-
-## Development
-
-Tests use [pytest-homeassistant-custom-component](https://github.com/MatthewFlamm/pytest-homeassistant-custom-component),
-which needs a POSIX environment (it imports `homeassistant.runner`, which
-uses `fcntl`) — run these from Linux, WSL, or a devcontainer, not native
-Windows:
-
-```bash
-pip install -r requirements-dev.txt
-pytest
-```
