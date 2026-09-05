@@ -1,5 +1,5 @@
 """Tests for pure coordinator helper logic."""
-from custom_components.tandoor_meal_plan.coordinator import _trim_recipe_detail
+from integrations.tandoor_meal_plan.coordinator import _trim_recipe_detail
 
 
 def test_trim_recipe_detail_keeps_only_rendered_fields() -> None:

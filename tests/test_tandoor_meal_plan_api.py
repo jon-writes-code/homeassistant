@@ -2,7 +2,7 @@
 import aiohttp
 import pytest
 
-from custom_components.tandoor_meal_plan.api import (
+from integrations.tandoor_meal_plan.api import (
     TandoorAuthError,
     TandoorConnectionError,
     _normalize_meal_dates,

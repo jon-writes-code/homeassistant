@@ -2,7 +2,7 @@
 import aiohttp
 import pytest
 
-from custom_components.tandoor_meal_plan.api import (
+from integrations.tandoor_meal_plan.api import (
     TandoorAuthError,
     async_create_shopping_list_item,
     async_delete_shopping_list_item,

@@ -1,5 +1,5 @@
 """Tests for the shopping-list item summary formatting."""
-from custom_components.tandoor_meal_plan.todo import _format_summary
+from integrations.tandoor_meal_plan.todo import _format_summary
 
 
 def test_format_summary_plain_item_no_amount() -> None:

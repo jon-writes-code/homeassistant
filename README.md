@@ -52,7 +52,7 @@ header, and no external site ever gets embedded.
 
 ## Integrations
 
-### `custom_components/tandoor_meal_plan/`
+### `integrations/tandoor_meal_plan/`
 
 A Home Assistant integration for Tandoor, configured entirely through the
 UI (**Settings > Devices & Services > Add Integration > Tandoor Meal
@@ -74,9 +74,10 @@ Provides:
 - `tandoor_meal_plan.search_recipes` service — fuzzy-search recipes by
   name; returns matches for use in scripts/automations.
 
-Install by copying `custom_components/tandoor_meal_plan/` into your HA
-config's `custom_components/` directory, restart HA, then add the
-integration via the UI as above.
+Install by copying `integrations/tandoor_meal_plan/` into your HA config's
+`custom_components/` directory (that exact name is required — Home
+Assistant's component loader looks for it specifically), restart HA, then
+add the integration via the UI as above.
 
 ## Development
 
